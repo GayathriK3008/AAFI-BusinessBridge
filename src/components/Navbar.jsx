@@ -1145,129 +1145,86 @@ export default function Navbar() {
           </div>
 
 
-          {/* Mobile Services */}
+          {/* =================================================
+    MOBILE SERVICES
+================================================= */}
 
-          {serviceLinks.map(
-            (item) => {
-              const Icon =
-                item.icon;
+<div
+  className="relative"
+  data-services-menu
+>
+  <button
+    type="button"
+    onClick={(event) => {
+      event.stopPropagation();
+      setServicesOpen((previous) => !previous);
+    }}
+    className={`flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-sm font-semibold ${
+      isServiceActive || servicesOpen
+        ? "bg-blue-50 text-blue-600"
+        : "text-slate-700 hover:bg-slate-50"
+    }`}
+  >
+    <span>Services</span>
 
-              const isActive =
-                activeSection ===
-                item.href.replace(
-                  "#",
-                  ""
-                );
+    <ChevronDown
+      className={`h-4 w-4 transition-transform ${
+        servicesOpen ? "rotate-180" : ""
+      }`}
+    />
+  </button>
 
-              return (
-                <button
-                  key={
-                    item.href
-                  }
-                  type="button"
-                  onClick={() =>
-                    scrollToSection(
-                      item.href
-                    )
-                  }
-                  className={`
-                    flex
-                    w-full
-                    items-center
-                    gap-3
-                    rounded-xl
-                    px-3
-                    py-3
-                    text-left
-                    transition
-                    ${
-                      isActive
-                        ? "bg-blue-50"
-                        : "hover:bg-slate-50"
-                    }
-                  `}
-                >
+  {/* MOBILE SERVICE OPTIONS */}
 
-                  <div
-                    className={`
-                      flex
-                      h-10
-                      w-10
-                      shrink-0
-                      items-center
-                      justify-center
-                      rounded-xl
-                      ${
-                        isActive
-                          ? "bg-blue-100 text-blue-600"
-                          : "bg-slate-50 text-slate-500"
-                      }
-                    `}
-                  >
-                    <Icon
-                      className="h-5 w-5"
-                      strokeWidth={
-                        1.8
-                      }
-                    />
-                  </div>
+  {servicesOpen && (
+    <div className="mt-1 ml-3 space-y-1 border-l-2 border-blue-100 pl-3">
+      {serviceLinks.map((item) => {
+        const Icon = item.icon;
 
-                  <div className="flex-1">
+        const active =
+          activeSection === item.href.replace("#", "");
 
-                    <span
-                      className={`
-                        block
-                        text-sm
-                        font-semibold
-                        ${
-                          isActive
-                            ? "text-blue-600"
-                            : "text-slate-800"
-                        }
-                      `}
-                    >
-                      {
-                        item.label
-                      }
-                    </span>
+        return (
+          <button
+            key={item.href}
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              scrollToSection(item.href);
+            }}
+            className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left ${
+              active
+                ? "bg-blue-50 text-blue-600"
+                : "text-slate-600 hover:bg-slate-50"
+            }`}
+          >
+            <span
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
+                active
+                  ? "bg-blue-100 text-blue-600"
+                  : "bg-slate-50 text-slate-500"
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+            </span>
 
-                    <span
-                      className="
-                        mt-0.5
-                        block
-                        text-xs
-                        text-slate-500
-                      "
-                    >
-                      {
-                        item.description
-                      }
-                    </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold">
+                {item.label}
+              </p>
 
-                  </div>
+              <p className="text-[11px] text-slate-400">
+                {item.description}
+              </p>
+            </div>
 
-                  <ChevronRight
-                    className="
-                      h-4
-                      w-4
-                      text-slate-300
-                    "
-                  />
-
-                </button>
-              );
-            }
-          )}
-
-
-          <div
-            className="
-              my-2
-              border-t
-              border-slate-100
-            "
-          />
-
+            <ChevronRight className="h-4 w-4 shrink-0 text-slate-300" />
+          </button>
+        );
+      })}
+    </div>
+  )}
+</div>
 
           {/* Mobile Remaining Links */}
 
