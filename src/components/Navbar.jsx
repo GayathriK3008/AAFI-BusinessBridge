@@ -94,15 +94,10 @@ const mainLinks = [
 ========================================================= */
 
 export default function Navbar() {
-  const [activeSection, setActiveSection] =
-    useState("home");
-
-  const [servicesOpen, setServicesOpen] =
-    useState(false);
-
-  const [mobileOpen, setMobileOpen] =
-    useState(false);
-
+  const [activeSection, setActiveSection] = useState("home");
+const [servicesOpen, setServicesOpen] = useState(false);
+const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+const [mobileOpen, setMobileOpen] = useState(false);
   /* =======================================================
      ACTIVE SECTION OBSERVER
   ======================================================= */
@@ -177,40 +172,19 @@ export default function Navbar() {
   ======================================================= */
 
   const scrollToSection = (href) => {
-    setServicesOpen(false);
-    setMobileOpen(false);
+  setServicesOpen(false);
+  setMobileServicesOpen(false);
+  setMobileOpen(false);
 
-    const element =
-      document.querySelector(href);
+  const element = document.querySelector(href);
 
-    if (!element) return;
-
-    const navbarHeight = 90;
-
-    const targetPosition =
-      element.getBoundingClientRect()
-        .top +
-      window.scrollY -
-      navbarHeight;
-
-    window.scrollTo({
-      top: Math.max(
-        0,
-        targetPosition
-      ),
+  if (element) {
+    element.scrollIntoView({
       behavior: "smooth",
+      block: "start",
     });
-
-    window.history.replaceState(
-      null,
-      "",
-      href
-    );
-
-    setActiveSection(
-      href.replace("#", "")
-    );
-  };
+  }
+};
 
   /* =======================================================
      ACTIVE SERVICE
@@ -1103,128 +1077,94 @@ export default function Navbar() {
           />
 
 
-          {/* Mobile Services Heading */}
+          {/* ================= MOBILE SERVICES ================= */}
 
+<button
+  type="button"
+  onClick={() =>
+    setMobileServicesOpen((prev) => !prev)
+  }
+  className={`flex w-full items-center justify-between rounded-xl px-3 py-3.5 text-left text-sm font-semibold transition ${
+    mobileServicesOpen || isServiceActive
+      ? "bg-blue-50 text-blue-600"
+      : "text-slate-700 hover:bg-slate-50"
+  }`}
+>
+  <span>Services</span>
+
+  <ChevronDown
+    className={`h-4 w-4 transition-transform duration-200 ${
+      mobileServicesOpen ? "rotate-180" : ""
+    }`}
+    strokeWidth={2.5}
+  />
+</button>
+
+{/* ================= MOBILE SERVICE OPTIONS ================= */}
+
+{mobileServicesOpen && (
+  <div className="ml-3 mt-1 space-y-1 border-l-2 border-blue-100 pl-3">
+    {serviceLinks.map((item) => {
+      const Icon = item.icon;
+
+      const isActive =
+        activeSection ===
+        item.href.replace("#", "");
+
+      return (
+        <button
+          key={item.href}
+          type="button"
+          onClick={() =>
+            scrollToSection(item.href)
+          }
+          className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition ${
+            isActive
+              ? "bg-blue-50"
+              : "hover:bg-slate-50"
+          }`}
+        >
           <div
-            className="
-              flex
-              items-center
-              justify-between
-              px-3
-              py-2
-            "
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
+              isActive
+                ? "bg-blue-100 text-blue-600"
+                : "bg-slate-50 text-slate-500"
+            }`}
           >
-            <p
-              className="
-                text-xs
-                font-bold
-                uppercase
-                tracking-widest
-                text-blue-600
-              "
-            >
-              Services
-            </p>
+            <Icon
+              className="h-5 w-5"
+              strokeWidth={1.8}
+            />
+          </div>
 
+          <div className="flex-1">
             <span
-              className="
-                rounded-full
-                bg-blue-50
-                px-2
-                py-1
-                text-[10px]
-                font-bold
-                text-blue-600
-              "
+              className={`block text-sm font-semibold ${
+                isActive
+                  ? "text-blue-600"
+                  : "text-slate-800"
+              }`}
             >
-              {
-                serviceLinks.length
-              }{" "}
-              Areas
+              {item.label}
+            </span>
+
+            <span className="mt-0.5 block text-xs text-slate-500">
+              {item.description}
             </span>
           </div>
 
+          <ChevronRight
+            className="h-4 w-4 text-slate-300"
+          />
+        </button>
+      );
+    })}
+  </div>
+)}
 
-          {/* =================================================
-    MOBILE SERVICES
-================================================= */}
+<div className="my-2 border-t border-slate-100" />
 
-<div
-  className="relative"
-  data-services-menu
->
-  <button
-    type="button"
-    onClick={(event) => {
-      event.stopPropagation();
-      setServicesOpen((previous) => !previous);
-    }}
-    className={`flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-sm font-semibold ${
-      isServiceActive || servicesOpen
-        ? "bg-blue-50 text-blue-600"
-        : "text-slate-700 hover:bg-slate-50"
-    }`}
-  >
-    <span>Services</span>
-
-    <ChevronDown
-      className={`h-4 w-4 transition-transform ${
-        servicesOpen ? "rotate-180" : ""
-      }`}
-    />
-  </button>
-
-  {/* MOBILE SERVICE OPTIONS */}
-
-  {servicesOpen && (
-    <div className="mt-1 ml-3 space-y-1 border-l-2 border-blue-100 pl-3">
-      {serviceLinks.map((item) => {
-        const Icon = item.icon;
-
-        const active =
-          activeSection === item.href.replace("#", "");
-
-        return (
-          <button
-            key={item.href}
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              scrollToSection(item.href);
-            }}
-            className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left ${
-              active
-                ? "bg-blue-50 text-blue-600"
-                : "text-slate-600 hover:bg-slate-50"
-            }`}
-          >
-            <span
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                active
-                  ? "bg-blue-100 text-blue-600"
-                  : "bg-slate-50 text-slate-500"
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-            </span>
-
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold">
-                {item.label}
-              </p>
-
-              <p className="text-[11px] text-slate-400">
-                {item.description}
-              </p>
-            </div>
-
-            <ChevronRight className="h-4 w-4 shrink-0 text-slate-300" />
-          </button>
-        );
-      })}
-    </div>
-  )}
-</div>
+ 
 
           {/* Mobile Remaining Links */}
 
