@@ -106,6 +106,22 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   /* =========================================================
+     LOCK PAGE SCROLL WHEN MOBILE MENU IS OPEN
+  ========================================================= */
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [mobileOpen]);
+
+  /* =========================================================
      ACTIVE SECTION OBSERVER
   ========================================================= */
 
@@ -229,6 +245,7 @@ export default function Navbar() {
     <nav
       className="
         fixed
+        overflow-visible
         left-0
         right-0
         top-0
@@ -797,599 +814,322 @@ export default function Navbar() {
         <div
           className="
             fixed
-            inset-x-0
+            left-0
+            right-0
             top-[76px]
-            bottom-0
             z-50
+            h-[calc(100dvh-76px)]
+            w-full
             overflow-y-auto
-            overscroll-contain
-            border-t
-            border-slate-100
+            overflow-x-hidden
             bg-white
-            px-5
-            pb-8
-            pt-3
-            shadow-xl
-            lg:hidden
+            overscroll-contain
           "
           style={{
             WebkitOverflowScrolling: "touch",
             overscrollBehaviorY: "contain",
+            touchAction: "pan-y",
           }}
         >
+          <div className="mx-auto w-full max-w-[520px] px-5 pb-10 pt-4">
 
-          {/* =================================================
-              CURRENT SECTION
-          ================================================= */}
+            {/* =================================================
+                CURRENT SECTION
+            ================================================= */}
 
-          <div
-            className="
-              mb-4
-              rounded-2xl
-              bg-blue-50
-              p-4
-            "
-          >
-            <p
-              className="
-                text-[10px]
-                font-bold
-                uppercase
-                tracking-widest
-                text-blue-600
-              "
-            >
-              You are viewing
-            </p>
-
-            <div className="mt-1 flex items-center gap-2">
-              <span
-                className="
-                  h-2
-                  w-2
-                  rounded-full
-                  bg-blue-600
-                "
-              />
-
-              <p className="font-bold text-slate-900">
-                {activeSection
-                  .replace(/-/g, " ")
-                  .replace(/\b\w/g, (letter) =>
-                    letter.toUpperCase()
-                  )}
-              </p>
-            </div>
-          </div>
-
-          {/* =================================================
-              HOME
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#home")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "home"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>Home</span>
-
-            {activeSection === "home" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              ABOUT
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#about")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "about"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>About</span>
-
-            {activeSection === "about" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              HOW IT WORKS
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#how-it-works")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "how-it-works"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>How It Works</span>
-
-            {activeSection === "how-it-works" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              PACKAGES
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#packages")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "packages"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>Packages</span>
-
-            {activeSection === "packages" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              PORTFOLIO
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#portfolio")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "portfolio"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>Portfolio</span>
-
-            {activeSection === "portfolio" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              WHY US
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#why-us")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "why-us"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>Why Us</span>
-
-            {activeSection === "why-us" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              FAQ
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#faq")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "faq"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>FAQ</span>
-
-            {activeSection === "faq" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              CONTACT
-          ================================================= */}
-
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#contact")
-            }
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                activeSection === "contact"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>Contact</span>
-
-            {activeSection === "contact" ? (
-              <Check
-                className="h-4 w-4"
-                strokeWidth={3}
-              />
-            ) : (
-              <ArrowRight className="h-4 w-4 text-slate-300" />
-            )}
-          </button>
-
-          {/* =================================================
-              MOBILE SERVICES
-              
-              IMPORTANT:
-              This uses mobileServicesOpen.
-              It does NOT use servicesOpen.
-          ================================================= */}
-
-          <div className="my-2 border-t border-slate-100" />
-
-          <button
-             type="button"
-  onClick={() => {
-    console.log("SERVICES CLICKED");
-    setMobileServicesOpen((prev) => !prev);
-  }}
-            className={`
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-xl
-              px-3
-              py-3.5
-              text-left
-              text-sm
-              font-semibold
-              transition
-              ${
-                isServiceActive ||
-                mobileServicesOpen
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-slate-700 hover:bg-slate-50"
-              }
-            `}
-          >
-            <span>Services</span>
-
-            <ChevronDown
-              className={`
-                h-4
-                w-4
-                transition-transform
-                duration-200
-                ${
-                  mobileServicesOpen
-                    ? "rotate-180"
-                    : ""
-                }
-              `}
-            />
-          </button>
-
-          {/* =================================================
-              MOBILE SERVICE OPTIONS
-          ================================================= */}
-
-          {mobileServicesOpen && (
             <div
               className="
-                ml-3
-                mt-1
-                space-y-1
-                border-l-2
-                border-blue-100
-                pl-3
+                mb-4
+                rounded-2xl
+                bg-blue-50
+                p-4
               "
             >
-              {serviceLinks.map((item) => {
-                const Icon = item.icon;
+              <p
+                className="
+                  text-[10px]
+                  font-bold
+                  uppercase
+                  tracking-widest
+                  text-blue-600
+                "
+              >
+                You are viewing
+              </p>
 
-                const active =
-                  activeSection ===
-                  item.href.replace("#", "");
+              <div className="mt-1 flex items-center gap-2">
+                <span
+                  className="
+                    h-2
+                    w-2
+                    shrink-0
+                    rounded-full
+                    bg-blue-600
+                  "
+                />
 
-                return (
-                  <button
-                    key={item.href}
-                    type="button"
-                    onClick={() =>
-                      scrollToSection(
-                        item.href
-                      )
+                <p className="font-bold text-slate-900">
+                  {activeSection
+                    .replace(/-/g, " ")
+                    .replace(/\b\w/g, (letter) =>
+                      letter.toUpperCase()
+                    )}
+                </p>
+              </div>
+            </div>
+
+            {/* =================================================
+                MAIN MOBILE LINKS
+            ================================================= */}
+
+            {mainLinks.map((item) => {
+              const active =
+                activeSection === item.href.replace("#", "");
+
+              return (
+                <button
+                  key={item.href}
+                  type="button"
+                  onClick={() => scrollToSection(item.href)}
+                  className={`
+                    flex
+                    w-full
+                    items-center
+                    justify-between
+                    rounded-xl
+                    px-3
+                    py-3.5
+                    text-left
+                    text-sm
+                    font-semibold
+                    transition
+                    ${
+                      active
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-slate-700 hover:bg-slate-50"
                     }
-                    className={`
-                      flex
-                      w-full
-                      items-center
-                      gap-3
-                      rounded-xl
-                      px-3
-                      py-3
-                      text-left
-                      transition
-                      ${
-                        active
-                          ? "bg-blue-50 text-blue-600"
-                          : "text-slate-600 hover:bg-slate-50"
-                      }
-                    `}
-                  >
-                    {/* ICON */}
+                  `}
+                >
+                  <span>{item.label}</span>
 
-                    <span
+                  {active ? (
+                    <Check
+                      className="h-4 w-4"
+                      strokeWidth={3}
+                    />
+                  ) : (
+                    <ArrowRight
+                      className="h-4 w-4 text-slate-300"
+                    />
+                  )}
+                </button>
+              );
+            })}
+
+            {/* =================================================
+                MOBILE SERVICES
+            ================================================= */}
+
+            <div className="my-2 border-t border-slate-100" />
+
+            <button
+              type="button"
+              onClick={() =>
+                setMobileServicesOpen(
+                  (previous) => !previous
+                )
+              }
+              className={`
+                flex
+                w-full
+                items-center
+                justify-between
+                rounded-xl
+                px-3
+                py-3.5
+                text-left
+                text-sm
+                font-semibold
+                transition
+                ${
+                  isServiceActive || mobileServicesOpen
+                    ? "bg-blue-50 text-blue-600"
+                    : "text-slate-700 hover:bg-slate-50"
+                }
+              `}
+            >
+              <span>Services</span>
+
+              <ChevronDown
+                className={`
+                  h-4
+                  w-4
+                  transition-transform
+                  duration-200
+                  ${
+                    mobileServicesOpen
+                      ? "rotate-180"
+                      : ""
+                  }
+                `}
+              />
+            </button>
+
+            {/* =================================================
+                MOBILE SERVICE OPTIONS
+            ================================================= */}
+
+            {mobileServicesOpen && (
+              <div
+                className="
+                  ml-3
+                  mt-1
+                  space-y-1
+                  border-l-2
+                  border-blue-100
+                  pl-3
+                "
+              >
+                {serviceLinks.map((item) => {
+                  const Icon = item.icon;
+
+                  const active =
+                    activeSection ===
+                    item.href.replace("#", "");
+
+                  return (
+                    <button
+                      key={item.href}
+                      type="button"
+                      onClick={() =>
+                        scrollToSection(item.href)
+                      }
                       className={`
                         flex
-                        h-10
-                        w-10
-                        shrink-0
+                        w-full
                         items-center
-                        justify-center
+                        gap-3
                         rounded-xl
+                        px-3
+                        py-3
+                        text-left
+                        transition
                         ${
                           active
-                            ? "bg-blue-100 text-blue-600"
-                            : "bg-slate-50 text-slate-500"
+                            ? "bg-blue-50 text-blue-600"
+                            : "text-slate-600 hover:bg-slate-50"
                         }
                       `}
                     >
-                      <Icon
-                        className="h-5 w-5"
-                        strokeWidth={1.8}
-                      />
-                    </span>
+                      {/* ICON */}
 
-                    {/* TEXT */}
-
-                    <div className="min-w-0 flex-1">
                       <span
                         className={`
-                          block
-                          text-sm
-                          font-semibold
+                          flex
+                          h-10
+                          w-10
+                          shrink-0
+                          items-center
+                          justify-center
+                          rounded-xl
                           ${
                             active
-                              ? "text-blue-600"
-                              : "text-slate-800"
+                              ? "bg-blue-100 text-blue-600"
+                              : "bg-slate-50 text-slate-500"
                           }
                         `}
                       >
-                        {item.label}
+                        <Icon
+                          className="h-5 w-5"
+                          strokeWidth={1.8}
+                        />
                       </span>
 
-                      <span
+                      {/* TEXT */}
+
+                      <div className="min-w-0 flex-1">
+                        <span
+                          className={`
+                            block
+                            text-sm
+                            font-semibold
+                            ${
+                              active
+                                ? "text-blue-600"
+                                : "text-slate-800"
+                            }
+                          `}
+                        >
+                          {item.label}
+                        </span>
+
+                        <span
+                          className="
+                            mt-0.5
+                            block
+                            text-xs
+                            text-slate-500
+                          "
+                        >
+                          {item.description}
+                        </span>
+                      </div>
+
+                      <ChevronRight
                         className="
-                          mt-0.5
-                          block
-                          text-xs
-                          text-slate-500
+                          h-4
+                          w-4
+                          shrink-0
+                          text-slate-300
                         "
-                      >
-                        {item.description}
-                      </span>
-                    </div>
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
-                    <ChevronRight
-                      className="
-                        h-4
-                        w-4
-                        shrink-0
-                        text-slate-300
-                      "
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          )}
+            {/* =================================================
+                MOBILE CTA
+            ================================================= */}
 
-          {/* =================================================
-              MOBILE CTA
-          ================================================= */}
+            <button
+              type="button"
+              onClick={() =>
+                scrollToSection("#contact")
+              }
+              className="
+                mt-4
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-2
+                rounded-xl
+                bg-blue-600
+                px-5
+                py-3.5
+                text-sm
+                font-semibold
+                text-white
+                shadow-lg
+                shadow-blue-600/20
+                transition
+                hover:bg-blue-700
+              "
+            >
+              Start Your Business
 
-          <button
-            type="button"
-            onClick={() =>
-              scrollToSection("#contact")
-            }
-            className="
-              mt-4
-              flex
-              w-full
-              items-center
-              justify-center
-              gap-2
-              rounded-xl
-              bg-blue-600
-              px-5
-              py-3.5
-              text-sm
-              font-semibold
-              text-white
-              shadow-lg
-              shadow-blue-600/20
-              transition
-              hover:bg-blue-700
-            "
-          >
-            Start Your Business
+              <ArrowRight
+                className="h-4 w-4"
+                strokeWidth={2.5}
+              />
+            </button>
 
-            <ArrowRight
-              className="h-4 w-4"
-              strokeWidth={2.5}
-            />
-          </button>
-
+          </div>
         </div>
       )}
+
     </nav>
   );
 }
