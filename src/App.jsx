@@ -234,19 +234,17 @@ function App() {
             <div className="flex items-center gap-3">
 
               {/* Logo Mark */}
-              <div
-                className="
-                  flex h-11 w-11 items-center justify-center
-                  rounded-xl bg-blue-600
-                  text-lg font-bold text-white
-                  shadow-lg shadow-blue-600/20
-                  transition duration-300
-                  group-hover:-translate-y-0.5
-                  group-hover:shadow-xl
-                "
-              >
-                A
-              </div>
+             <img
+  src="/logo.png"
+  alt="AAFI BusinessBridge Solutions"
+  className="
+    h-11
+    w-11
+    shrink-0
+    rounded-xl
+    object-contain
+  "
+/>
 
               {/* Logo Text */}
               <div className="hidden sm:block">
@@ -633,7 +631,11 @@ function App() {
 
 
               {/* Main Mobile Links */}
-              <div className="grid gap-1">
+             
+<div
+  className="grid gap-1"
+  data-services-menu
+>
 
                 {mainNavItems.map((item) => {
                   const active = activeSection === item.id

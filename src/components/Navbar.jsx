@@ -95,12 +95,19 @@ const mainLinks = [
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
-const [servicesOpen, setServicesOpen] = useState(false);
-const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-const [mobileOpen, setMobileOpen] = useState(false);
-  /* =======================================================
+
+  // Desktop Services dropdown
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  // Mobile Services dropdown
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+
+  // Mobile main menu
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  /* =========================================================
      ACTIVE SECTION OBSERVER
-  ======================================================= */
+  ========================================================= */
 
   useEffect(() => {
     const sectionIds = [
@@ -120,93 +127,75 @@ const [mobileOpen, setMobileOpen] = useState(false);
     ];
 
     const sections = sectionIds
-      .map((id) =>
-        document.getElementById(id)
-      )
+      .map((id) => document.getElementById(id))
       .filter(Boolean);
 
-    const observer =
-      new IntersectionObserver(
-        (entries) => {
-          const visibleSections =
-            entries
-              .filter(
-                (entry) =>
-                  entry.isIntersecting
-              )
-              .sort(
-                (a, b) =>
-                  b.intersectionRatio -
-                  a.intersectionRatio
-              );
+    if (!sections.length) return;
 
-          if (
-            visibleSections.length > 0
-          ) {
-            setActiveSection(
-              visibleSections[0].target.id
-            );
-          }
-        },
-        {
-          rootMargin:
-            "-100px 0px -55% 0px",
-          threshold: [
-            0.1,
-            0.25,
-            0.5,
-          ],
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              b.intersectionRatio - a.intersectionRatio
+          );
+
+        if (visibleSections.length > 0) {
+          setActiveSection(
+            visibleSections[0].target.id
+          );
         }
-      );
+      },
+      {
+        rootMargin: "-100px 0px -55% 0px",
+        threshold: [0.1, 0.25, 0.5],
+      }
+    );
 
     sections.forEach((section) =>
       observer.observe(section)
     );
 
-    return () =>
-      observer.disconnect();
+    return () => observer.disconnect();
   }, []);
 
-  /* =======================================================
-     SCROLL
-  ======================================================= */
+  /* =========================================================
+     SCROLL TO SECTION
+  ========================================================= */
 
   const scrollToSection = (href) => {
-  setServicesOpen(false);
-  setMobileServicesOpen(false);
-  setMobileOpen(false);
+    // Close everything after selecting a section
+    setServicesOpen(false);
+    setMobileServicesOpen(false);
+    setMobileOpen(false);
 
-  const element = document.querySelector(href);
+    const element = document.querySelector(href);
 
-  if (element) {
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
-};
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
-  /* =======================================================
+  /* =========================================================
      ACTIVE SERVICE
-  ======================================================= */
+  ========================================================= */
 
-  const isServiceActive =
-    serviceLinks.some(
-      (item) =>
-        item.href ===
-        `#${activeSection}`
-    );
+  const isServiceActive = serviceLinks.some(
+    (item) =>
+      item.href === `#${activeSection}`
+  );
 
-  /* =======================================================
-     DESKTOP NAV BUTTON
-  ======================================================= */
+  /* =========================================================
+     DESKTOP NAV CLASS
+  ========================================================= */
 
-  const desktopNavClass = (
-    href
-  ) => {
+  const desktopNavClass = (href) => {
     const active =
-      activeSection ===
-      href.replace("#", "");
+      activeSection === href.replace("#", "");
 
     return `
       group
@@ -232,6 +221,10 @@ const [mobileOpen, setMobileOpen] = useState(false);
     `;
   };
 
+  /* =========================================================
+     RENDER
+  ========================================================= */
+
   return (
     <nav
       className="
@@ -247,9 +240,9 @@ const [mobileOpen, setMobileOpen] = useState(false);
       "
     >
 
-      {/* ===================================================
-          NEW DESKTOP NAVBAR
-      =================================================== */}
+      {/* =====================================================
+          MAIN NAVBAR
+      ===================================================== */}
 
       <div
         className="
@@ -265,16 +258,14 @@ const [mobileOpen, setMobileOpen] = useState(false);
         "
       >
 
-        {/* =================================================
+        {/* ===================================================
             LOGO
-        ================================================= */}
+        =================================================== */}
 
         <button
           type="button"
           onClick={() =>
-            scrollToSection(
-              "#home"
-            )
+            scrollToSection("#home")
           }
           className="
             flex
@@ -300,13 +291,7 @@ const [mobileOpen, setMobileOpen] = useState(false);
             "
           />
 
-          <div
-            className="
-              hidden
-              shrink-0
-              sm:block
-            "
-          >
+          <div className="hidden shrink-0 sm:block">
             <div
               className="
                 whitespace-nowrap
@@ -335,13 +320,9 @@ const [mobileOpen, setMobileOpen] = useState(false);
           </div>
         </button>
 
-
-        {/* =================================================
-            DESKTOP NAVIGATION AREA
-
-            IMPORTANT:
-            This is the main fix.
-        ================================================= */}
+        {/* ===================================================
+            DESKTOP NAVIGATION
+        =================================================== */}
 
         <div
           className="
@@ -353,92 +334,52 @@ const [mobileOpen, setMobileOpen] = useState(false);
             gap-1
             lg:flex
           "
-          style={{
-            flexWrap: "nowrap",
-          }}
         >
 
-          {/* =================================================
-              HOME
-          ================================================= */}
+          {/* HOME */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#home"
-              )
+              scrollToSection("#home")
             }
-            className={
-              desktopNavClass(
-                "#home"
-              )
-            }
+            className={desktopNavClass("#home")}
           >
-            <span className="whitespace-nowrap">
-              Home
-            </span>
+            <span>Home</span>
 
-            {activeSection ===
-              "home" && (
+            {activeSection === "home" && (
               <Check
-                className="
-                  ml-1.5
-                  h-3.5
-                  w-3.5
-                  shrink-0
-                "
+                className="ml-1.5 h-3.5 w-3.5"
                 strokeWidth={3}
               />
             )}
           </button>
 
-
-          {/* =================================================
-              ABOUT
-          ================================================= */}
+          {/* ABOUT */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#about"
-              )
+              scrollToSection("#about")
             }
-            className={
-              desktopNavClass(
-                "#about"
-              )
-            }
+            className={desktopNavClass("#about")}
           >
-            <span className="whitespace-nowrap">
-              About
-            </span>
+            <span>About</span>
 
-            {activeSection ===
-              "about" && (
+            {activeSection === "about" && (
               <Check
-                className="
-                  ml-1.5
-                  h-3.5
-                  w-3.5
-                  shrink-0
-                "
+                className="ml-1.5 h-3.5 w-3.5"
                 strokeWidth={3}
               />
             )}
           </button>
 
-
           {/* =================================================
-              SERVICES
+              DESKTOP SERVICES
           ================================================= */}
 
           <div
-            className="
-              relative
-              shrink-0
-            "
+            className="relative shrink-0"
             onMouseEnter={() =>
               setServicesOpen(true)
             }
@@ -446,12 +387,11 @@ const [mobileOpen, setMobileOpen] = useState(false);
               setServicesOpen(false)
             }
           >
-
             <button
               type="button"
               onClick={() =>
                 setServicesOpen(
-                  (prev) => !prev
+                  (previous) => !previous
                 )
               }
               className={`
@@ -471,17 +411,13 @@ const [mobileOpen, setMobileOpen] = useState(false);
                 transition-all
                 duration-200
                 ${
-                  isServiceActive ||
-                  servicesOpen
+                  isServiceActive || servicesOpen
                     ? "bg-blue-50 text-blue-600 shadow-sm"
                     : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
                 }
               `}
             >
-
-              <span className="whitespace-nowrap">
-                Services
-              </span>
+              <span>Services</span>
 
               <span
                 className="
@@ -511,13 +447,9 @@ const [mobileOpen, setMobileOpen] = useState(false);
                 `}
                 strokeWidth={2.5}
               />
-
             </button>
 
-
-            {/* =============================================
-                SERVICES DROPDOWN
-            ============================================= */}
+            {/* DESKTOP DROPDOWN */}
 
             {servicesOpen && (
               <div
@@ -531,7 +463,6 @@ const [mobileOpen, setMobileOpen] = useState(false);
                   pt-3
                 "
               >
-
                 <div
                   className="
                     overflow-hidden
@@ -545,24 +476,10 @@ const [mobileOpen, setMobileOpen] = useState(false);
                   "
                 >
 
-                  {/* Dropdown Header */}
+                  {/* HEADER */}
 
-                  <div
-                    className="
-                      px-4
-                      pb-3
-                      pt-3
-                    "
-                  >
-
-                    <div
-                      className="
-                        flex
-                        items-center
-                        justify-between
-                      "
-                    >
-
+                  <div className="px-4 pb-3 pt-3">
+                    <div className="flex items-center justify-between">
                       <p
                         className="
                           text-[11px]
@@ -586,12 +503,8 @@ const [mobileOpen, setMobileOpen] = useState(false);
                           text-blue-600
                         "
                       >
-                        {
-                          serviceLinks.length
-                        }{" "}
-                        Areas
+                        {serviceLinks.length} Areas
                       </span>
-
                     </div>
 
                     <p
@@ -601,317 +514,203 @@ const [mobileOpen, setMobileOpen] = useState(false);
                         text-slate-500
                       "
                     >
-                      Select a service area
-                      to explore
+                      Select a service area to explore
                     </p>
-
                   </div>
 
+                  {/* SERVICE ITEMS */}
 
-                  {/* Service Items */}
+                  {serviceLinks.map((item) => {
+                    const Icon = item.icon;
 
-                  {serviceLinks.map(
-                    (item) => {
-                      const Icon =
-                        item.icon;
+                    const active =
+                      activeSection ===
+                      item.href.replace("#", "");
 
-                      const isActive =
-                        activeSection ===
-                        item.href.replace(
-                          "#",
-                          ""
-                        );
-
-                      return (
-                        <button
-                          key={
+                    return (
+                      <button
+                        key={item.href}
+                        type="button"
+                        onClick={() =>
+                          scrollToSection(
                             item.href
+                          )
+                        }
+                        className={`
+                          group/item
+                          flex
+                          w-full
+                          items-center
+                          gap-3
+                          rounded-xl
+                          p-3
+                          text-left
+                          transition
+                          ${
+                            active
+                              ? "bg-blue-50"
+                              : "hover:bg-slate-50"
                           }
-                          type="button"
-                          onClick={() =>
-                            scrollToSection(
-                              item.href
-                            )
-                          }
+                        `}
+                      >
+                        <div
                           className={`
-                            group/item
                             flex
-                            w-full
+                            h-11
+                            w-11
+                            shrink-0
                             items-center
-                            gap-3
+                            justify-center
                             rounded-xl
-                            p-3
-                            text-left
-                            transition
                             ${
-                              isActive
-                                ? "bg-blue-50"
-                                : "hover:bg-slate-50"
+                              active
+                                ? "bg-blue-100 text-blue-600"
+                                : "bg-slate-50 text-slate-500 group-hover/item:bg-blue-50 group-hover/item:text-blue-600"
                             }
                           `}
                         >
+                          <Icon
+                            className="h-5 w-5"
+                            strokeWidth={1.8}
+                          />
+                        </div>
 
+                        <div className="min-w-0 flex-1">
                           <div
                             className={`
-                              flex
-                              h-11
-                              w-11
-                              shrink-0
-                              items-center
-                              justify-center
-                              rounded-xl
+                              text-sm
+                              font-semibold
                               ${
-                                isActive
-                                  ? "bg-blue-100 text-blue-600"
-                                  : "bg-slate-50 text-slate-500 group-hover/item:bg-blue-50 group-hover/item:text-blue-600"
+                                active
+                                  ? "text-blue-600"
+                                  : "text-slate-900"
                               }
                             `}
                           >
-                            <Icon
-                              className="h-5 w-5"
-                              strokeWidth={
-                                1.8
-                              }
-                            />
+                            {item.label}
                           </div>
-
 
                           <div
                             className="
-                              min-w-0
-                              flex-1
+                              mt-0.5
+                              text-xs
+                              text-slate-500
                             "
                           >
-
-                            <div
-                              className={`
-                                text-sm
-                                font-semibold
-                                ${
-                                  isActive
-                                    ? "text-blue-600"
-                                    : "text-slate-900"
-                                }
-                              `}
-                            >
-                              {
-                                item.label
-                              }
-                            </div>
-
-                            <div
-                              className="
-                                mt-0.5
-                                text-xs
-                                text-slate-500
-                              "
-                            >
-                              {
-                                item.description
-                              }
-                            </div>
-
+                            {item.description}
                           </div>
+                        </div>
 
-
-                          <ChevronRight
-                            className="
-                              h-4
-                              w-4
-                              shrink-0
-                              text-slate-300
-                              transition
-                              group-hover/item:translate-x-1
-                              group-hover/item:text-blue-500
-                            "
-                          />
-
-                        </button>
-                      );
-                    }
-                  )}
-
+                        <ChevronRight
+                          className="
+                            h-4
+                            w-4
+                            shrink-0
+                            text-slate-300
+                            transition
+                            group-hover/item:translate-x-1
+                            group-hover/item:text-blue-500
+                          "
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
-
           </div>
 
-
-          {/* =================================================
-              HOW IT WORKS
-              FORCED SINGLE LINE
-          ================================================= */}
+          {/* HOW IT WORKS */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#how-it-works"
-              )
+              scrollToSection("#how-it-works")
             }
-            className={`
-              flex
-              h-10
-              min-w-max
-              shrink-0
-              items-center
-              justify-center
-              whitespace-nowrap
-              rounded-lg
-              px-3
-              text-[14px]
-              font-semibold
-              leading-none
-              transition-all
-              duration-200
-              ${
-                activeSection ===
-                "how-it-works"
-                  ? "bg-blue-50 text-blue-600 shadow-sm"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
-              }
-            `}
+            className={desktopNavClass(
+              "#how-it-works"
+            )}
           >
             How It Works
           </button>
 
-
-          {/* =================================================
-              PACKAGES
-          ================================================= */}
+          {/* PACKAGES */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#packages"
-              )
+              scrollToSection("#packages")
             }
-            className={
-              desktopNavClass(
-                "#packages"
-              )
-            }
+            className={desktopNavClass(
+              "#packages"
+            )}
           >
             Packages
           </button>
 
-
-          {/* =================================================
-              PORTFOLIO
-          ================================================= */}
+          {/* PORTFOLIO */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#portfolio"
-              )
+              scrollToSection("#portfolio")
             }
-            className={
-              desktopNavClass(
-                "#portfolio"
-              )
-            }
+            className={desktopNavClass(
+              "#portfolio"
+            )}
           >
             Portfolio
           </button>
 
-
-          {/* =================================================
-              WHY US
-              FORCED SINGLE LINE
-          ================================================= */}
+          {/* WHY US */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#why-us"
-              )
+              scrollToSection("#why-us")
             }
-            className={`
-              flex
-              h-10
-              min-w-max
-              shrink-0
-              items-center
-              justify-center
-              whitespace-nowrap
-              rounded-lg
-              px-3
-              text-[14px]
-              font-semibold
-              leading-none
-              transition-all
-              duration-200
-              ${
-                activeSection ===
-                "why-us"
-                  ? "bg-blue-50 text-blue-600 shadow-sm"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
-              }
-            `}
+            className={desktopNavClass(
+              "#why-us"
+            )}
           >
             Why Us
           </button>
 
-
-          {/* =================================================
-              FAQ
-          ================================================= */}
+          {/* FAQ */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#faq"
-              )
+              scrollToSection("#faq")
             }
-            className={
-              desktopNavClass(
-                "#faq"
-              )
-            }
+            className={desktopNavClass("#faq")}
           >
             FAQ
           </button>
 
-
-          {/* =================================================
-              CONTACT
-          ================================================= */}
+          {/* CONTACT */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#contact"
-              )
+              scrollToSection("#contact")
             }
-            className={
-              desktopNavClass(
-                "#contact"
-              )
-            }
+            className={desktopNavClass(
+              "#contact"
+            )}
           >
             Contact
           </button>
-
         </div>
 
-
-        {/* =================================================
+        {/* ===================================================
             DESKTOP GET STARTED
-        ================================================= */}
+        =================================================== */}
 
         <button
           type="button"
           onClick={() =>
-            scrollToSection(
-              "#contact"
-            )
+            scrollToSection("#contact")
           }
           className="
             hidden
@@ -944,16 +743,15 @@ const [mobileOpen, setMobileOpen] = useState(false);
           />
         </button>
 
-
-        {/* =================================================
+        {/* ===================================================
             MOBILE MENU BUTTON
-        ================================================= */}
+        =================================================== */}
 
         <button
           type="button"
           onClick={() =>
             setMobileOpen(
-              (prev) => !prev
+              (previous) => !previous
             )
           }
           className="
@@ -975,9 +773,7 @@ const [mobileOpen, setMobileOpen] = useState(false);
             lg:hidden
           "
           aria-label="Toggle navigation"
-          aria-expanded={
-            mobileOpen
-          }
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? (
             <X
@@ -991,235 +787,581 @@ const [mobileOpen, setMobileOpen] = useState(false);
             />
           )}
         </button>
-
       </div>
-
 
       {/* =====================================================
           MOBILE MENU
       ===================================================== */}
 
       {mobileOpen && (
-       
-  <div
-    className="
-      fixed
-      inset-x-0
-      top-[76px]
-      bottom-0
-      z-50
-      overflow-y-auto
-      overscroll-contain
-      border-t
-      border-slate-100
-      bg-white
-      px-5
-      pb-8
-      pt-3
-      shadow-xl
-      lg:hidden
-    "
-    style={{
-      WebkitOverflowScrolling: "touch",
-      overscrollBehaviorY: "contain",
-    }}
-  >
+        <div
+          className="
+            fixed
+            inset-x-0
+            top-[76px]
+            bottom-0
+            z-50
+            overflow-y-auto
+            overscroll-contain
+            border-t
+            border-slate-100
+            bg-white
+            px-5
+            pb-8
+            pt-3
+            shadow-xl
+            lg:hidden
+          "
+          style={{
+            WebkitOverflowScrolling: "touch",
+            overscrollBehaviorY: "contain",
+          }}
+        >
 
-          {/* Mobile Main Links */}
-
-          {mainLinks
-            .slice(0, 2)
-            .map((link) => (
-              <button
-                key={link.href}
-                type="button"
-                onClick={() =>
-                  scrollToSection(
-                    link.href
-                  )
-                }
-                className={`
-                  flex
-                  w-full
-                  items-center
-                  justify-between
-                  rounded-xl
-                  px-3
-                  py-3
-                  text-left
-                  text-sm
-                  font-semibold
-                  transition
-                  ${
-                    activeSection ===
-                    link.href.replace(
-                      "#",
-                      ""
-                    )
-                      ? "bg-blue-50 text-blue-600"
-                      : "text-slate-700 hover:bg-slate-50"
-                  }
-                `}
-              >
-                {link.label}
-
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            ))}
-
+          {/* =================================================
+              CURRENT SECTION
+          ================================================= */}
 
           <div
             className="
-              my-2
-              border-t
-              border-slate-100
+              mb-4
+              rounded-2xl
+              bg-blue-50
+              p-4
             "
-          />
-
-
-          {/* ================= MOBILE SERVICES ================= */}
-
-<button
-  type="button"
-  onClick={() =>
-    setMobileServicesOpen((prev) => !prev)
-  }
-  className={`flex w-full items-center justify-between rounded-xl px-3 py-3.5 text-left text-sm font-semibold transition ${
-    mobileServicesOpen || isServiceActive
-      ? "bg-blue-50 text-blue-600"
-      : "text-slate-700 hover:bg-slate-50"
-  }`}
->
-  <span>Services</span>
-
-  <ChevronDown
-    className={`h-4 w-4 transition-transform duration-200 ${
-      mobileServicesOpen ? "rotate-180" : ""
-    }`}
-    strokeWidth={2.5}
-  />
-</button>
-
-{/* ================= MOBILE SERVICE OPTIONS ================= */}
-
-{mobileServicesOpen && (
-  <div className="ml-3 mt-1 space-y-1 border-l-2 border-blue-100 pl-3">
-    {serviceLinks.map((item) => {
-      const Icon = item.icon;
-
-      const isActive =
-        activeSection ===
-        item.href.replace("#", "");
-
-      return (
-        <button
-          key={item.href}
-          type="button"
-          onClick={() =>
-            scrollToSection(item.href)
-          }
-          className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition ${
-            isActive
-              ? "bg-blue-50"
-              : "hover:bg-slate-50"
-          }`}
-        >
-          <div
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-              isActive
-                ? "bg-blue-100 text-blue-600"
-                : "bg-slate-50 text-slate-500"
-            }`}
           >
-            <Icon
-              className="h-5 w-5"
-              strokeWidth={1.8}
-            />
-          </div>
-
-          <div className="flex-1">
-            <span
-              className={`block text-sm font-semibold ${
-                isActive
-                  ? "text-blue-600"
-                  : "text-slate-800"
-              }`}
+            <p
+              className="
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-widest
+                text-blue-600
+              "
             >
-              {item.label}
-            </span>
+              You are viewing
+            </p>
 
-            <span className="mt-0.5 block text-xs text-slate-500">
-              {item.description}
-            </span>
+            <div className="mt-1 flex items-center gap-2">
+              <span
+                className="
+                  h-2
+                  w-2
+                  rounded-full
+                  bg-blue-600
+                "
+              />
+
+              <p className="font-bold text-slate-900">
+                {activeSection
+                  .replace(/-/g, " ")
+                  .replace(/\b\w/g, (letter) =>
+                    letter.toUpperCase()
+                  )}
+              </p>
+            </div>
           </div>
 
-          <ChevronRight
-            className="h-4 w-4 text-slate-300"
-          />
-        </button>
-      );
-    })}
-  </div>
-)}
-
-<div className="my-2 border-t border-slate-100" />
-
- 
-
-          {/* Mobile Remaining Links */}
-
-          {mainLinks
-            .slice(2)
-            .map((link) => (
-              <button
-                key={link.href}
-                type="button"
-                onClick={() =>
-                  scrollToSection(
-                    link.href
-                  )
-                }
-                className={`
-                  flex
-                  w-full
-                  items-center
-                  justify-between
-                  rounded-xl
-                  px-3
-                  py-3
-                  text-left
-                  text-sm
-                  font-semibold
-                  transition
-                  ${
-                    activeSection ===
-                    link.href.replace(
-                      "#",
-                      ""
-                    )
-                      ? "bg-blue-50 text-blue-600"
-                      : "text-slate-700 hover:bg-slate-50"
-                  }
-                `}
-              >
-                {link.label}
-
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            ))}
-
-
-          {/* Mobile CTA */}
+          {/* =================================================
+              HOME
+          ================================================= */}
 
           <button
             type="button"
             onClick={() =>
-              scrollToSection(
-                "#contact"
-              )
+              scrollToSection("#home")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "home"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>Home</span>
+
+            {activeSection === "home" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              ABOUT
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#about")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "about"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>About</span>
+
+            {activeSection === "about" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              HOW IT WORKS
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#how-it-works")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "how-it-works"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>How It Works</span>
+
+            {activeSection === "how-it-works" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              PACKAGES
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#packages")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "packages"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>Packages</span>
+
+            {activeSection === "packages" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              PORTFOLIO
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#portfolio")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "portfolio"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>Portfolio</span>
+
+            {activeSection === "portfolio" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              WHY US
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#why-us")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "why-us"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>Why Us</span>
+
+            {activeSection === "why-us" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              FAQ
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#faq")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "faq"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>FAQ</span>
+
+            {activeSection === "faq" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              CONTACT
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#contact")
+            }
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                activeSection === "contact"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>Contact</span>
+
+            {activeSection === "contact" ? (
+              <Check
+                className="h-4 w-4"
+                strokeWidth={3}
+              />
+            ) : (
+              <ArrowRight className="h-4 w-4 text-slate-300" />
+            )}
+          </button>
+
+          {/* =================================================
+              MOBILE SERVICES
+              
+              IMPORTANT:
+              This uses mobileServicesOpen.
+              It does NOT use servicesOpen.
+          ================================================= */}
+
+          <div className="my-2 border-t border-slate-100" />
+
+          <button
+             type="button"
+  onClick={() => {
+    console.log("SERVICES CLICKED");
+    setMobileServicesOpen((prev) => !prev);
+  }}
+            className={`
+              flex
+              w-full
+              items-center
+              justify-between
+              rounded-xl
+              px-3
+              py-3.5
+              text-left
+              text-sm
+              font-semibold
+              transition
+              ${
+                isServiceActive ||
+                mobileServicesOpen
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-slate-700 hover:bg-slate-50"
+              }
+            `}
+          >
+            <span>Services</span>
+
+            <ChevronDown
+              className={`
+                h-4
+                w-4
+                transition-transform
+                duration-200
+                ${
+                  mobileServicesOpen
+                    ? "rotate-180"
+                    : ""
+                }
+              `}
+            />
+          </button>
+
+          {/* =================================================
+              MOBILE SERVICE OPTIONS
+          ================================================= */}
+
+          {mobileServicesOpen && (
+            <div
+              className="
+                ml-3
+                mt-1
+                space-y-1
+                border-l-2
+                border-blue-100
+                pl-3
+              "
+            >
+              {serviceLinks.map((item) => {
+                const Icon = item.icon;
+
+                const active =
+                  activeSection ===
+                  item.href.replace("#", "");
+
+                return (
+                  <button
+                    key={item.href}
+                    type="button"
+                    onClick={() =>
+                      scrollToSection(
+                        item.href
+                      )
+                    }
+                    className={`
+                      flex
+                      w-full
+                      items-center
+                      gap-3
+                      rounded-xl
+                      px-3
+                      py-3
+                      text-left
+                      transition
+                      ${
+                        active
+                          ? "bg-blue-50 text-blue-600"
+                          : "text-slate-600 hover:bg-slate-50"
+                      }
+                    `}
+                  >
+                    {/* ICON */}
+
+                    <span
+                      className={`
+                        flex
+                        h-10
+                        w-10
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-xl
+                        ${
+                          active
+                            ? "bg-blue-100 text-blue-600"
+                            : "bg-slate-50 text-slate-500"
+                        }
+                      `}
+                    >
+                      <Icon
+                        className="h-5 w-5"
+                        strokeWidth={1.8}
+                      />
+                    </span>
+
+                    {/* TEXT */}
+
+                    <div className="min-w-0 flex-1">
+                      <span
+                        className={`
+                          block
+                          text-sm
+                          font-semibold
+                          ${
+                            active
+                              ? "text-blue-600"
+                              : "text-slate-800"
+                          }
+                        `}
+                      >
+                        {item.label}
+                      </span>
+
+                      <span
+                        className="
+                          mt-0.5
+                          block
+                          text-xs
+                          text-slate-500
+                        "
+                      >
+                        {item.description}
+                      </span>
+                    </div>
+
+                    <ChevronRight
+                      className="
+                        h-4
+                        w-4
+                        shrink-0
+                        text-slate-300
+                      "
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* =================================================
+              MOBILE CTA
+          ================================================= */}
+
+          <button
+            type="button"
+            onClick={() =>
+              scrollToSection("#contact")
             }
             className="
-              mt-3
+              mt-4
               flex
               w-full
               items-center
@@ -1238,7 +1380,7 @@ const [mobileOpen, setMobileOpen] = useState(false);
               hover:bg-blue-700
             "
           >
-            Get Started
+            Start Your Business
 
             <ArrowRight
               className="h-4 w-4"
@@ -1248,7 +1390,6 @@ const [mobileOpen, setMobileOpen] = useState(false);
 
         </div>
       )}
-
     </nav>
   );
 }
