@@ -1026,20 +1026,30 @@ export default function Navbar() {
       ===================================================== */}
 
       {mobileOpen && (
-        <div
-          className="
-            max-h-[calc(100vh-76px)]
-            overflow-y-auto
-            border-t
-            border-slate-100
-            bg-white
-            px-5
-            pb-5
-            pt-3
-            shadow-xl
-            lg:hidden
-          "
-        >
+       
+  <div
+    className="
+      fixed
+      inset-x-0
+      top-[76px]
+      bottom-0
+      z-50
+      overflow-y-auto
+      overscroll-contain
+      border-t
+      border-slate-100
+      bg-white
+      px-5
+      pb-8
+      pt-3
+      shadow-xl
+      lg:hidden
+    "
+    style={{
+      WebkitOverflowScrolling: "touch",
+      overscrollBehaviorY: "contain",
+    }}
+  >
 
           {/* Mobile Main Links */}
 
