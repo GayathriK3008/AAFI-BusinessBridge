@@ -221,8 +221,8 @@ function App() {
       transition-all duration-200
       ${
         isActive
-          ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm"
-          : "border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-blue-600"
+          ? "border-violet-400/30 bg-violet-500/10 text-violet-300 shadow-sm"
+          : "border-transparent text-slate-400 hover:border-white/10 hover:bg-slate-800 hover:text-violet-400"
       }
     `
   }
@@ -233,7 +233,7 @@ function App() {
           PREMIUM NAVBAR
       ===================================================== */}
 
-     <nav className="fixed left-0 right-0 top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-sm xl:backdrop-blur-xl">
+     <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-slate-950/95 shadow-2xl shadow-black/20 xl:backdrop-blur-xl">
 
         {/* MAIN NAVBAR ROW */}
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 lg:px-6">
@@ -247,26 +247,26 @@ function App() {
           >
             <div className="flex items-center gap-3">
 
-              {/* Logo Mark */}
-             <img
+           {/* Official AAFI Logo */}
+<img
   src="/logo.png"
   alt="AAFI BusinessBridge Solutions"
   className="
-    h-11
-    w-11
+    h-14
+    w-auto
+    max-w-[220px]
     shrink-0
-    rounded-xl
     object-contain
   "
 />
 
               {/* Logo Text */}
               <div className="hidden sm:block">
-                <h1 className="text-xl font-bold tracking-tight text-slate-950">
+                <h1 className="text-xl font-bold tracking-tight text-white">
                   AAFI
                 </h1>
 
-                <p className="-mt-0.5 text-[11px] font-medium tracking-wide text-slate-500">
+                <p className="-mt-0.5 text-[11px] font-medium tracking-wide text-slate-400">
                   BusinessBridge Solutions
                 </p>
               </div>
@@ -290,9 +290,9 @@ function App() {
               <span>Home</span>
 
               {activeSection === "home" ? (
-                <Check className="h-3.5 w-3.5 text-blue-600" strokeWidth={3} />
+                <Check className="h-3.5 w-3.5 text-violet-400" strokeWidth={3} />
               ) : (
-                <ArrowRight className="h-3.5 w-3.5 text-slate-300 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
+                <ArrowRight className="h-3.5 w-3.5 text-slate-400 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
               )}
             </button>
 
@@ -306,9 +306,9 @@ function App() {
               <span>About</span>
 
               {activeSection === "about" ? (
-                <Check className="h-3.5 w-3.5 text-blue-600" strokeWidth={3} />
+                <Check className="h-3.5 w-3.5 text-violet-400" strokeWidth={3} />
               ) : (
-                <ArrowRight className="h-3.5 w-3.5 text-slate-300 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
+                <ArrowRight className="h-3.5 w-3.5 text-slate-400 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
               )}
             </button>
 
@@ -335,8 +335,8 @@ function App() {
                   transition-all duration-200
                   ${
                     isServicesActive || servicesOpen
-                      ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
+                      ? "bg-violet-500/10 text-violet-400 shadow-sm"
+                      : "text-slate-400 hover:bg-slate-800 hover:text-violet-400"
                   }
                 `}
               >
@@ -355,7 +355,7 @@ function App() {
                 />
 
                 {(isServicesActive || servicesOpen) && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-600" />
                 )}
 
               </button>
@@ -367,9 +367,9 @@ function App() {
                   className="
                     absolute left-1/2 top-full mt-3 w-80
                     -translate-x-1/2
-                    rounded-2xl border border-slate-200
-                    bg-white p-2
-                    shadow-2xl shadow-slate-300/30
+                    rounded-2xl border border-white/10
+                    bg-slate-900 p-2
+                    shadow-2xl shadow-black/40
                   "
                 >
 
@@ -378,17 +378,17 @@ function App() {
 
                     <div className="flex items-center justify-between">
 
-                      <p className="text-[11px] font-bold uppercase tracking-widest text-blue-600">
+                      <p className="text-[11px] font-bold uppercase tracking-widest text-violet-400">
                         Explore Services
                       </p>
 
-                      <span className="rounded-full bg-blue-50 px-2 py-1 text-[10px] font-semibold text-blue-600">
+                      <span className="rounded-full bg-violet-500/10 px-2 py-1 text-[10px] font-semibold text-violet-400">
                         5 Areas
                       </span>
 
                     </div>
 
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs text-slate-400">
                       Select a service area to explore
                     </p>
 
@@ -411,8 +411,8 @@ function App() {
                           text-left transition duration-200
                           ${
                             active
-                              ? "bg-blue-50 text-blue-600"
-                              : "text-slate-700 hover:bg-slate-50 hover:text-blue-600"
+                              ? "bg-violet-500/10 text-violet-400"
+                              : "text-slate-400 hover:bg-slate-800 hover:text-violet-400"
                           }
                         `}
                       >
@@ -424,8 +424,8 @@ function App() {
                             justify-center rounded-xl
                             ${
                               active
-                                ? "bg-blue-100 text-blue-600"
-                                : "bg-slate-50 text-slate-500 group-hover/item:bg-blue-50 group-hover/item:text-blue-600"
+                                ? "bg-violet-500/20 text-violet-400"
+                                : "bg-slate-800 text-slate-400 group-hover/item:bg-violet-500/10 group-hover/item:text-violet-400"
                             }
                           `}
                         >
@@ -456,8 +456,8 @@ function App() {
                             h-4 w-4 transition-all duration-200
                             ${
                               active
-                                ? "text-blue-600"
-                                : "text-slate-300 group-hover/item:translate-x-1 group-hover/item:text-blue-500"
+                                ? "text-violet-400"
+                                : "text-slate-400 group-hover/item:translate-x-1 group-hover/item:text-violet-400"
                             }
                           `}
                         />
@@ -493,11 +493,11 @@ function App() {
 
                   {activeSection === item.id ? (
                     <Check
-                      className="h-3.5 w-3.5 text-blue-600"
+                      className="h-3.5 w-3.5 text-violet-400"
                       strokeWidth={3}
                     />
                   ) : (
-                    <ArrowRight className="h-3.5 w-3.5 text-slate-300 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
+                    <ArrowRight className="h-3.5 w-3.5 text-slate-400 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
                   )}
                 </button>
               ))}
@@ -515,14 +515,14 @@ function App() {
             className="
               hidden shrink-0 items-center
               justify-center rounded-xl
-              bg-blue-600 px-5 py-3
+              bg-violet-600 px-5 py-3
               text-sm font-bold text-white
-              shadow-lg shadow-blue-600/20
+              shadow-lg shadow-violet-600/20
               transition duration-300
               hover:-translate-y-0.5
-              hover:bg-blue-700
+              hover:bg-violet-600
               hover:shadow-xl
-              hover:shadow-blue-600/30
+              hover:shadow-violet-600/30
               xl:inline-flex
             "
           >
@@ -545,7 +545,7 @@ function App() {
               type="button"
               onClick={() => scrollToSection("contact")}
               className="
-                hidden rounded-xl bg-blue-600
+                hidden rounded-xl bg-violet-600
                 px-4 py-2.5 text-sm font-bold
                 text-white shadow-md
                 sm:inline-flex
@@ -561,12 +561,12 @@ function App() {
               }
               className="
                 flex h-11 w-11 items-center justify-center
-                rounded-xl border border-slate-200
-                bg-white text-slate-700
+                rounded-xl border border-white/10
+                bg-slate-900 text-slate-400
                 shadow-sm transition
-                hover:border-blue-300
-                hover:bg-blue-50
-                hover:text-blue-600
+                hover:border-violet-400/40
+                hover:bg-violet-500/10
+                hover:text-violet-400
               "
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
@@ -587,27 +587,27 @@ function App() {
             CURRENT LOCATION INDICATOR
         ===================================================== */}
 
-        <div className="border-t border-slate-100 bg-slate-50/80">
+        <div className="border-t border-white/5 bg-slate-900/90">
 
           <div className="mx-auto flex max-w-7xl items-center px-5 py-2 lg:px-6">
 
-            <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-blue-600" />
+            <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-violet-600" />
 
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
               You are here
             </span>
 
-            <span className="mx-2 text-slate-300">
+            <span className="mx-2 text-slate-400">
               •
             </span>
 
-            <span className="text-[11px] font-bold text-blue-600">
+            <span className="text-[11px] font-bold text-violet-400">
               {currentSectionName}
             </span>
 
             <span className="ml-auto hidden items-center gap-2 text-[10px] font-medium text-slate-400 sm:flex">
               <span>Click any menu item to jump</span>
-              <ArrowRight className="h-3 w-3 text-blue-500" />
+              <ArrowRight className="h-3 w-3 text-violet-400" />
             </span>
 
           </div>
@@ -629,7 +629,7 @@ function App() {
       z-[9999]
       overflow-y-auto
       overflow-x-hidden
-      bg-white
+      bg-slate-900
       shadow-2xl
       xl:hidden
     "
@@ -642,15 +642,15 @@ function App() {
     <div className="mx-auto min-h-full w-full max-w-7xl px-5 py-4 pb-12">
 
       {/* CURRENT LOCATION */}
-      <div className="mb-4 rounded-2xl bg-blue-50 p-4">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-blue-600">
+      <div className="mb-4 rounded-2xl border border-violet-400/20 bg-violet-500/10 p-4">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-violet-400">
           You are viewing
         </p>
 
         <div className="mt-1 flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-blue-600" />
+          <span className="h-2 w-2 rounded-full bg-violet-600" />
 
-          <p className="font-bold text-slate-900">
+          <p className="font-bold text-slate-100">
             {currentSectionName}
           </p>
         </div>
@@ -681,8 +681,8 @@ function App() {
                 transition
                 ${
                   active
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-slate-700 hover:bg-slate-50 hover:text-blue-600"
+                    ? "bg-violet-500/10 text-violet-400"
+                    : "text-slate-400 hover:bg-slate-800 hover:text-violet-400"
                 }
               `}
             >
@@ -691,7 +691,7 @@ function App() {
               </span>
 
               {active ? (
-                <span className="flex items-center gap-2 text-xs font-bold text-blue-600">
+                <span className="flex items-center gap-2 text-xs font-bold text-violet-400">
                   CURRENT
 
                   <Check
@@ -701,7 +701,7 @@ function App() {
                 </span>
               ) : (
                 <ArrowRight
-                  className="h-4 w-4 text-slate-300"
+                  className="h-4 w-4 text-slate-400"
                 />
               )}
             </button>
@@ -730,8 +730,8 @@ function App() {
             transition
             ${
               servicesOpen || isServicesActive
-                ? "bg-blue-50 text-blue-600"
-                : "text-slate-700 hover:bg-slate-50 hover:text-blue-600"
+                ? "bg-violet-500/10 text-violet-400"
+                : "text-slate-400 hover:bg-slate-800 hover:text-violet-400"
             }
           `}
         >
@@ -739,7 +739,7 @@ function App() {
             <span>Services</span>
 
             {isServicesActive && (
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-600" />
             )}
           </div>
 
@@ -760,7 +760,7 @@ function App() {
               ml-3
               space-y-1
               border-l-2
-              border-blue-100
+              border-violet-400/20
               pl-3
             "
           >
@@ -785,8 +785,8 @@ function App() {
                     transition
                     ${
                       active
-                        ? "bg-blue-50 text-blue-600"
-                        : "text-slate-600 hover:bg-slate-50"
+                        ? "bg-violet-500/10 text-violet-400"
+                        : "text-slate-400 hover:bg-slate-800"
                     }
                   `}
                 >
@@ -802,8 +802,8 @@ function App() {
                       rounded-xl
                       ${
                         active
-                          ? "bg-blue-100 text-blue-600"
-                          : "bg-slate-50 text-slate-500"
+                          ? "bg-violet-500/20 text-violet-400"
+                          : "bg-slate-800 text-slate-400"
                       }
                     `}
                   >
@@ -827,12 +827,12 @@ function App() {
                   {/* RIGHT ICON */}
                   {active ? (
                     <Check
-                      className="h-4 w-4 shrink-0 text-blue-600"
+                      className="h-4 w-4 shrink-0 text-violet-400"
                       strokeWidth={3}
                     />
                   ) : (
                     <ChevronRight
-                      className="h-4 w-4 shrink-0 text-slate-300"
+                      className="h-4 w-4 shrink-0 text-slate-400"
                     />
                   )}
                 </button>
@@ -853,15 +853,15 @@ function App() {
           items-center
           justify-center
           rounded-xl
-          bg-blue-600
+          bg-violet-600
           px-5
           py-3.5
           font-bold
           text-white
           shadow-lg
-          shadow-blue-600/20
+          shadow-violet-600/20
           transition
-          hover:bg-blue-700
+          hover:bg-violet-600
         "
       >
         Start Your Business
@@ -890,14 +890,14 @@ function App() {
 
         <section
           id="home"
-          className="relative scroll-mt-28 overflow-hidden bg-slate-50 px-6 pb-20 pt-40"
+          className="relative scroll-mt-28 overflow-hidden bg-slate-950 px-6 pb-20 pt-40"
         >
 
           {/* Background Decorations */}
 
-          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-blue-100 opacity-60 blur-3xl" />
+          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-violet-500/20 opacity-60 blur-3xl" />
 
-          <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-indigo-100 opacity-60 blur-3xl" />
+          <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-indigo-500/20 opacity-60 blur-3xl" />
 
 
           <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
@@ -908,11 +908,11 @@ function App() {
 
               {/* Label */}
 
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-4 py-2">
 
-                <span className="h-2 w-2 rounded-full bg-blue-600" />
+                <span className="h-2 w-2 rounded-full bg-violet-600" />
 
-                <span className="text-sm font-semibold text-blue-700">
+                <span className="text-sm font-semibold text-violet-300">
                   AAFI BusinessBridge Solutions
                 </span>
 
@@ -921,11 +921,11 @@ function App() {
 
               {/* Heading */}
 
-              <h1 className="max-w-3xl text-5xl font-bold leading-tight tracking-tight text-slate-950 md:text-6xl lg:text-7xl">
+              <h1 className="max-w-3xl text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
 
                 From Business Idea
 
-                <span className="mt-2 block text-blue-600">
+                <span className="mt-2 block text-violet-400">
                   to Business Growth
                 </span>
 
@@ -934,7 +934,7 @@ function App() {
 
               {/* Description */}
 
-              <p className="mt-7 max-w-xl text-lg leading-8 text-slate-600">
+              <p className="mt-7 max-w-xl text-lg leading-8 text-slate-400">
                 You bring the business idea. We handle the rest.
                 From setting up your business to building your brand,
                 generating leads and supporting growth.
@@ -951,12 +951,12 @@ function App() {
                   className="
                     group inline-flex items-center
                     justify-center rounded-xl
-                    bg-blue-600 px-7 py-4
+                    bg-violet-600 px-7 py-4
                     font-semibold text-white
-                    shadow-lg shadow-blue-600/20
+                    shadow-lg shadow-violet-600/20
                     transition duration-300
                     hover:-translate-y-0.5
-                    hover:bg-blue-700
+                    hover:bg-violet-600
                     hover:shadow-xl
                   "
                 >
@@ -972,14 +972,14 @@ function App() {
                   className="
                     inline-flex items-center
                     justify-center rounded-xl
-                    border border-slate-300
-                    bg-white px-7 py-4
-                    font-semibold text-slate-800
+                    border border-white/15
+                    bg-slate-900 px-7 py-4
+                    font-semibold text-slate-300
                     shadow-sm transition duration-300
                     hover:-translate-y-0.5
-                    hover:border-blue-300
-                    hover:bg-blue-50
-                    hover:text-blue-700
+                    hover:border-violet-400/40
+                    hover:bg-violet-500/10
+                    hover:text-violet-300
                   "
                 >
                   Get a Free Consultation
@@ -990,11 +990,11 @@ function App() {
 
               {/* Trust Points */}
 
-              <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-500">
+              <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-slate-400">
 
                 <div className="flex items-center gap-2">
                   <Check
-                    className="h-4 w-4 text-blue-600"
+                    className="h-4 w-4 text-violet-400"
                     strokeWidth={3}
                   />
                   End-to-End Support
@@ -1002,7 +1002,7 @@ function App() {
 
                 <div className="flex items-center gap-2">
                   <Check
-                    className="h-4 w-4 text-blue-600"
+                    className="h-4 w-4 text-violet-400"
                     strokeWidth={3}
                   />
                   Business Setup
@@ -1010,7 +1010,7 @@ function App() {
 
                 <div className="flex items-center gap-2">
                   <Check
-                    className="h-4 w-4 text-blue-600"
+                    className="h-4 w-4 text-violet-400"
                     strokeWidth={3}
                   />
                   Growth Support
@@ -1025,13 +1025,13 @@ function App() {
 
             <div>
 
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl shadow-slate-200">
+              <div className="rounded-3xl border border-white/10 bg-slate-900/90 p-6 shadow-2xl shadow-black/30">
 
                 {/* Journey Header */}
 
                 <div className="rounded-2xl bg-slate-950 p-7 text-white">
 
-                  <p className="text-sm font-medium tracking-wide text-blue-300">
+                  <p className="text-sm font-medium tracking-wide text-violet-300">
                     YOUR BUSINESS JOURNEY
                   </p>
 
@@ -1039,7 +1039,7 @@ function App() {
                     Idea → Growth
                   </h2>
 
-                  <p className="mt-3 text-sm leading-6 text-slate-300">
+                  <p className="mt-3 text-sm leading-6 text-slate-400">
                     Everything you need to build and grow your business,
                     connected through one partner.
                   </p>
@@ -1057,30 +1057,30 @@ function App() {
                     type="button"
                     onClick={() => scrollToSection("business-setup")}
                     className="
-                      group rounded-2xl bg-blue-50 p-5 text-left
+                      group rounded-2xl bg-violet-500/10 p-5 text-left
                       transition duration-300
                       hover:-translate-y-1
-                      hover:bg-blue-100
+                      hover:bg-violet-500/20
                       hover:shadow-md
                     "
                   >
 
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-slate-800 text-violet-400 shadow-sm transition-transform duration-300 group-hover:scale-110">
                       <Building2
                         className="h-5 w-5"
                         strokeWidth={1.8}
                       />
                     </div>
 
-                    <h3 className="mt-3 font-bold text-slate-900">
+                    <h3 className="mt-3 font-bold text-slate-100">
                       Business Setup
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-slate-400">
                       Build the foundation
                     </p>
 
-                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-blue-600">
+                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-violet-400">
                       Explore
                       <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -1094,30 +1094,30 @@ function App() {
                     type="button"
                     onClick={() => scrollToSection("branding")}
                     className="
-                      group rounded-2xl bg-indigo-50 p-5 text-left
+                      group rounded-2xl border border-indigo-400/10 bg-indigo-500/10 p-5 text-left
                       transition duration-300
                       hover:-translate-y-1
-                      hover:bg-indigo-100
+                      hover:bg-indigo-500/20
                       hover:shadow-md
                     "
                   >
 
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-indigo-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-indigo-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
                       <Palette
                         className="h-5 w-5"
                         strokeWidth={1.8}
                       />
                     </div>
 
-                    <h3 className="mt-3 font-bold text-slate-900">
+                    <h3 className="mt-3 font-bold text-slate-100">
                       Branding
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-slate-400">
                       Create your identity
                     </p>
 
-                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-blue-600">
+                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-violet-400">
                       Explore
                       <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -1131,30 +1131,30 @@ function App() {
                     type="button"
                     onClick={() => scrollToSection("marketing")}
                     className="
-                      group rounded-2xl bg-sky-50 p-5 text-left
+                      group rounded-2xl border border-sky-400/10 bg-sky-500/10 p-5 text-left
                       transition duration-300
                       hover:-translate-y-1
-                      hover:bg-sky-100
+                      hover:bg-sky-500/20
                       hover:shadow-md
                     "
                   >
 
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-sky-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-sky-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
                       <TrendingUp
                         className="h-5 w-5"
                         strokeWidth={1.8}
                       />
                     </div>
 
-                    <h3 className="mt-3 font-bold text-slate-900">
+                    <h3 className="mt-3 font-bold text-slate-100">
                       Marketing
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-slate-400">
                       Generate leads
                     </p>
 
-                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-blue-600">
+                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-violet-400">
                       Explore
                       <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -1168,30 +1168,30 @@ function App() {
                     type="button"
                     onClick={() => scrollToSection("packages")}
                     className="
-                      group rounded-2xl bg-violet-50 p-5 text-left
+                      group rounded-2xl border border-violet-400/10 bg-violet-500/10 p-5 text-left
                       transition duration-300
                       hover:-translate-y-1
-                      hover:bg-violet-100
+                      hover:bg-violet-500/20
                       hover:shadow-md
                     "
                   >
 
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-violet-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-violet-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
                       <Rocket
                         className="h-5 w-5"
                         strokeWidth={1.8}
                       />
                     </div>
 
-                    <h3 className="mt-3 font-bold text-slate-900">
+                    <h3 className="mt-3 font-bold text-slate-100">
                       Growth
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-slate-400">
                       Scale your business
                     </p>
 
-                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-blue-600">
+                    <span className="mt-3 inline-flex items-center text-sm font-semibold text-violet-400">
                       Explore
                       <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -1203,21 +1203,21 @@ function App() {
 
                 {/* Progress */}
 
-                <div className="mt-5 rounded-2xl bg-slate-50 p-5">
+                <div className="mt-5 rounded-2xl bg-slate-950 p-5">
 
                   <div className="flex items-center justify-between text-sm">
 
-                    <span className="font-semibold text-slate-700">
+                    <span className="font-semibold text-slate-400">
                       Your business journey
                     </span>
 
-                    <span className="font-semibold text-blue-600">
+                    <span className="font-semibold text-violet-400">
                       4 Key Stages
                     </span>
 
                   </div>
 
-                  <div className="mt-5 h-px w-full bg-slate-200" />
+                  <div className="mt-5 h-px w-full bg-white/10" />
 
                 </div>
 

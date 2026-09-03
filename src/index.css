@@ -1,30 +1,113 @@
 @import "tailwindcss";
 
+/* =========================================================
+   AAFI BUSINESSBRIDGE — GLOBAL DESIGN SYSTEM
+   Brand: Deep Navy + Royal Purple
+========================================================= */
+
+:root {
+  /* Brand Colors */
+  --aafi-navy: #071753;
+  --aafi-navy-deep: #050816;
+  --aafi-navy-soft: #0b1230;
+
+  --aafi-purple: #5712aa;
+  --aafi-purple-bright: #6d1fe0;
+  --aafi-purple-soft: #8b5cf6;
+
+  /* Dark Surfaces */
+  --aafi-bg: #050816;
+  --aafi-bg-secondary: #080d24;
+  --aafi-surface: #0d1430;
+  --aafi-surface-light: #111a3d;
+  --aafi-surface-hover: #17214a;
+
+  /* Text */
+  --aafi-text: #ffffff;
+  --aafi-text-secondary: #cbd5e1;
+  --aafi-text-muted: #94a3b8;
+
+  /* Borders */
+  --aafi-border: #1e2a4a;
+  --aafi-border-light: #29365b;
+
+  /* Effects */
+  --aafi-purple-glow: rgba(109, 31, 224, 0.25);
+  --aafi-navy-glow: rgba(7, 23, 83, 0.35);
+
+  /* Compatibility variables for existing Vite styles */
+  --accent: var(--aafi-purple-bright);
+  --accent-bg: var(--aafi-surface);
+  --accent-border: var(--aafi-purple);
+  --border: var(--aafi-border);
+  --text-h: var(--aafi-text);
+  --social-bg: var(--aafi-surface);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 html {
   scroll-behavior: smooth;
+  background: var(--aafi-bg);
 }
 
 body {
   margin: 0;
+  min-width: 320px;
+  background: var(--aafi-bg);
+  color: var(--aafi-text-secondary);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  background: var(--aafi-purple);
+  color: #ffffff;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+html {
+  scrollbar-color: var(--aafi-purple) var(--aafi-bg-secondary);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--aafi-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--aafi-purple-bright),
+    var(--aafi-purple)
+  );
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--aafi-purple-soft);
 }
 
 /* =========================================================
    DESKTOP NAVBAR FIX
-   Prevent How It Works and Why Us from wrapping
-
-   ROOT CAUSE OF THE MOBILE MENU BUG (fixed here):
-   These rules were written only for the desktop nav row,
-   but had no @media guard, so they were applying globally
-   with !important — including to the mobile menu panel,
-   which lives inside the same <nav> element. That forced
-   "white-space: nowrap" on mobile menu labels and forced
-   "width: max-content" on the 4th/8th mobile menu buttons
-   (Packages / Contact), breaking their full-width layout
-   and causing content to overflow/clip on real phone
-   screens (narrower than a desktop "responsive" preview).
-   Scoping everything below to desktop (>=1024px) removes
-   that leak without changing any desktop appearance.
+   Keep existing desktop navigation behavior.
+   These rules apply ONLY to desktop.
 ========================================================= */
 
 @media (min-width: 1024px) {
@@ -34,33 +117,28 @@ body {
     overflow-wrap: normal !important;
   }
 
-  /* How It Works */
   nav button:nth-of-type(4) {
     min-width: 105px !important;
     width: max-content !important;
     flex-shrink: 0 !important;
   }
 
-  /* Why Us */
   nav button:nth-of-type(8) {
     min-width: 70px !important;
     width: max-content !important;
     flex-shrink: 0 !important;
   }
 
-  /* Keep desktop navigation in one row */
   nav .flex-1 {
     min-width: 0 !important;
     flex-wrap: nowrap !important;
   }
 
-  /* Never allow navbar text to wrap */
   nav span,
   nav button {
     white-space: nowrap !important;
   }
 
-  /* Desktop navbar spacing */
   nav {
     white-space: nowrap !important;
   }
@@ -71,7 +149,7 @@ body {
 }
 
 /* =========================================================
-   MOBILE PAGE
+   MOBILE
 ========================================================= */
 
 @media (max-width: 1023px) {
@@ -86,11 +164,8 @@ body {
 }
 
 /* =========================================================
-   MOBILE MENU SCROLL AREA
-
-   IMPORTANT:
-   Navbar.jsx/App.jsx uses a FIXED mobile menu.
-   This class is kept as a safety rule if used elsewhere.
+   MOBILE MENU SCROLL
+   Preserve the navigation fix that is already working.
 ========================================================= */
 
 .mobile-menu-scroll {
@@ -112,7 +187,20 @@ body {
 }
 
 /* =========================================================
-   ORIGINAL VITE STYLES
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--aafi-purple-bright);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   ORIGINAL VITE SUPPORT STYLES
 ========================================================= */
 
 .counter {
